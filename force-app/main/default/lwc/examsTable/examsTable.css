@@ -1,0 +1,26 @@
+lightning-icon {
+    cursor: pointer;
+    padding: 3px;
+}
+
+.icon-wrapper {
+    display: inline-block;
+    width: 20px;
+    margin-right: 5px;
+}
+
+.questions {
+    background-color: rgba(21,137,238,.1);
+}
+
+.questions tr:first-child td {
+    border-top: none;
+}
+
+.questions td:last-child {
+    width: 15%;
+}
+.questions td:first-child {
+    padding-left: 35px;
+}
+

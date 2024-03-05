@@ -1,0 +1,73 @@
+<template>
+    <lightning-card title="Exams">
+        <div class="slds-var-p-horizontal_medium">
+            <p>Average Score: <b>{avgScore}</b></p>
+
+            <table lwc:if={showTable} class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-var-m-top_small">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate">Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate">Datetime of Exam</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate">Total Score</div>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    
+                    <template for:each={exams} for:item="exam">
+                        <tr class="slds-hint-parent" key={exam.Id}>
+                            <td>
+                                <div class="slds-truncate">
+                                    <div class="icon-wrapper">
+                                        <template lwc:if={exam.hasQuestions}>
+                                            <lightning-icon icon-name={exam.iconName} onclick={handleToggleQuestions} size="xx-small" data-exam-id={exam.Id}></lightning-icon>
+                                        </template>
+                                    </div>
+                                    {exam.Name}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">
+                                    <lightning-formatted-date-time value={exam.datetime_of_exam__c} year="numeric" day="2-digit"
+                                    month="2-digit" hour="2-digit" minute="2-digit"></lightning-formatted-date-time>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{exam.total_score__c}</div>
+                            </td>
+                        </tr>
+
+                        <template lwc:if={exam.showQuestions}>
+                            <tr class="slds-hint-parent questions" key={exam.Id}>
+                                <td colspan="4">
+                                    <table>
+                                        <tbody>
+                                            <template for:each={exam.questions__r} for:item="question">
+                                                <tr class="slds-hint-parent" key={question.Id}>
+                                                    <td>
+                                                        <div class="slds-truncate">{question.Name}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">{question.score__c}</div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </template>
+
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </lightning-card>
+
+</template>
