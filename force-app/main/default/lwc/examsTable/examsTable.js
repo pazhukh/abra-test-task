@@ -3,10 +3,12 @@ import getExams from '@salesforce/apex/ExamsTableController.getExams';
 
 const iconExpanded = 'utility:chevrondown';
 const iconCollapsed = 'utility:chevronright';
+
 export default class ExamsTable extends LightningElement {
     @api recordId;
-    avgScore;
     @track exams;
+
+    avgScore;
     noExams;
 
     async connectedCallback() {
@@ -27,7 +29,7 @@ export default class ExamsTable extends LightningElement {
                 return exam;
             })
 
-            this.avgScore = this.calculateAvgScore(exams);
+            this.avgScore = this.calculateAvgScore(exams.filter(e => e.total_score__c || e.total_score__c == 0));
 
         } catch (e) {
             console.error('[ExamsTable][connectedCallback] error', error);
@@ -43,11 +45,7 @@ export default class ExamsTable extends LightningElement {
     }
 
     calculateAvgScore(exams) {
-        const sum = exams.reduce((total, curr) => total + curr.total_score__c || 0, 0);
+        const sum = exams.reduce((total, curr) => total + curr.total_score__c, 0);
         return (sum / exams.length).toFixed(1);
-    }
-
-    get showTable() {
-        return this.exams?.length;
     }
 }

@@ -48,7 +48,7 @@ public class QuestionHandler {
         for (Id examId : examIds) {
             exam__c exam = new exam__c(
                 Id = examId,
-                total_score__c = examIdVsTotalScore.get(examId) ?? null
+                total_score__c = examIdVsTotalScore.get(examId)
             );
             exams.add(exam);
         }
