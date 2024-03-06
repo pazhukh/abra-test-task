@@ -34,9 +34,7 @@ public class QuestionHandler {
 
         if (examIds.isEmpty()) return;
 
-        List<exam__c> exams = new List<exam__c>();
         Map<Id, Decimal> examIdVsTotalScore = new Map<Id, Decimal>();
-
         for (AggregateResult aggregateResult : [
                                                 SELECT exam__c, SUM(score__c) totalScore
                                                 FROM question__c
@@ -46,8 +44,7 @@ public class QuestionHandler {
             examIdVsTotalScore.put((Id)aggregateResult.get('exam__c'), (Decimal)aggregateResult.get('totalScore'));
         }
 
-        // when we reassign last record from parent then AggregateResult will not return SUM of parent record
-        // in this scenario we need to explicitly set null to parent record that has no children
+        List<exam__c> exams = new List<exam__c>();
         for (Id examId : examIds) {
             exam__c exam = new exam__c(
                 Id = examId,
