@@ -29,17 +29,17 @@ export default class ExamsTable extends LightningElement {
                 return exam;
             })
 
-            this.avgScore = this.calculateAvgScore(exams.filter(e => e.total_score__c || e.total_score__c == 0));
+            this.avgScore = this.calculateAvgScore(exams.filter(e => e.total_score__c || e.total_score__c === 0));
 
         } catch (e) {
-            console.error('[ExamsTable][connectedCallback] error', error);
+            console.error('[ExamsTable][connectedCallback] error', e);
         }
     }
 
-    handleToggleQuestions(e) {
-        const examId = e.target.dataset.examId;
+    handleToggleQuestions(event) {
+        const examId = event.target.dataset.examId;
 
-        const exam = this.exams.find(exam => exam.Id === examId);
+        const exam = this.exams.find(e => e.Id === examId);
         exam.showQuestions = !exam.showQuestions;
         exam.iconName = exam.showQuestions ? iconExpanded : iconCollapsed;
     }
