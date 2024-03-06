@@ -7,10 +7,17 @@ export default class ExamsTable extends LightningElement {
     @api recordId;
     avgScore;
     @track exams;
+    noExams;
 
     async connectedCallback() {
         try {
             const exams = await getExams({ contactId: this.recordId });
+
+            if (!exams.length) {
+                this.noExams = true;
+
+                return;
+            }
 
             this.exams = exams.map(exam => {
                 exam.hasQuestions = exam.questions__r?.length;
